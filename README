@@ -1,144 +1,119 @@
-# Prova de Conceito: Sistema Inteligente para Detecção Precoce de Doenças em Culturas Agrícolas
+# AgroVisão AI: Detecção de Doenças em Plantações com IA
 
-## Definição do Problema
+Um sistema inteligente que utiliza Deep Learning para a detecção e classificação precoce de doenças em culturas agrícolas a partir de imagens.
 
-*   **Contextualização e Importância:**
-    A agricultura é um pilar da economia global, mas enfrenta perdas anuais significativas devido a pragas e doenças que afetam as plantações. A detecção tardia dessas anomalias resulta em menor rendimento das colheitas, aumento do uso de pesticidas e, consequentemente, maiores custos para o produtor e impactos ambientais negativos. O monitoramento manual de grandes extensões de terra é um processo lento, caro e sujeito a falhas humanas. Um sistema que automatize e acelere a identificação de doenças em estágio inicial tem um potencial imenso para otimizar a produção agrícola, tornando-a mais sustentável e lucrativa.
+## 🎯 Sobre o Projeto
 
-*   **Justificativa para o uso de Inteligência Artificial:**
-    A identificação de doenças em plantas através de imagens é, em sua essência, um problema de reconhecimento de padrões visuais complexos. Sinais de doenças podem ser sutis e variar em cor, forma e textura. A Inteligência Artificial, especificamente os algoritmos de Deep Learning e visão computacional, é excepcionalmente adequada para essa tarefa, pois pode aprender a identificar esses padrões a partir de um grande volume de imagens (fotos de folhas, por exemplo) com uma precisão que pode superar a do olho humano. Um modelo de IA pode analisar milhares de imagens de forma rápida e consistente, permitindo uma resposta ágil do agricultor.
+A agricultura enfrenta perdas anuais significativas devido a pragas e doenças. O monitoramento manual é lento, caro e sujeito a falhas. Este projeto é uma Prova de Conceito (POC) de uma solução de Inteligência Artificial, a **"AgroVisão AI"**, que visa automatizar esse processo.
 
-## Proposta da Solução
+Utilizando imagens capturadas por drones ou smartphones, o sistema analisa, identifica e mapeia a incidência de doenças, permitindo que agricultores tomem ações rápidas e direcionadas, otimizando o uso de recursos e aumentando a produtividade.
 
-*   **Descrição do Sistema Inteligente:**
-    A solução proposta é uma plataforma chamada "AgroVisão AI", que utiliza imagens capturadas por drones ou smartphones para detectar e classificar doenças em plantações de forma automatizada. O agricultor sobrevoa a plantação com um drone equipado com uma câmera ou tira fotos de plantas suspeitas com seu celular. As imagens são enviadas para a plataforma na nuvem, onde um modelo de Inteligência Artificial as analisa e retorna um diagnóstico quase em tempo real. O sistema apresentará um mapa da plantação, destacando as áreas afetadas, o tipo de doença identificada e o nível de severidade, permitindo ações de manejo direcionadas e precisas.
+## ⚙️ Arquitetura da Solução
 
-*   **Tarefa a ser Resolvida:**
-    A tarefa principal do sistema é a **classificação de imagens**. O sistema irá classificar cada imagem recebida em uma de várias categorias predefinidas, como: "Planta Saudável", "Ferrugem Asiática", "Oídio", entre outras doenças específicas da cultura em questão. Secundariamente, o sistema também realizará a **detecção de anomalias**, identificando áreas que fogem do padrão de uma cultura saudável.
+O fluxo do sistema foi modelado para ser simples e eficiente, desde a coleta de dados em campo até a visualização do diagnóstico pelo usuário.
 
-## Modelagem da Solução
-
-*   **Esboço do Modelo Conceitual:**
-
-    ```
-    A [1. Coleta de Dados: Drone/Smartphone] --> B {2. Upload de Imagens};
-    B --> C [3. Plataforma AgroVisão AI];
-    C --> D {4. Processamento};
-    D --> E [5. Modelo de IA (CNN)];
-    E --> F [6. Análise e Classificação];
-    F --> G [7. Geração de Resultados];
-    G --> H [8. Dashboard do Agricultor];
+```mermaid
+graph TD
+    A[1. Coleta de Dados: Drone/Smartphone] --> B{2. Upload de Imagens};
+    B --> C[3. Plataforma AgroVisão AI];
+    C --> D{4. Processamento de Imagem};
+    D --> E[5. Modelo de IA (CNN)];
+    E --> F[6. Análise e Classificação];
+    F --> G[7. Geração de Resultados];
+    G --> H[8. Dashboard do Agricultor];
 
     subgraph "Plataforma na Nuvem"
-        C
-        D
-        E
-        F
-        G
+        C; D; E; F; G;
     end
-
     subgraph "Campo"
-        A
-        B
+        A; B;
     end
-
     subgraph "Usuário Final"
-        H
+        H;
     end
+```
+
+### Fluxo de Dados
+
+  * **Entradas:**
+
+      * Imagens digitais da plantação (folhas, caules) em alta resolução.
+      * (Opcional) Metadados de geolocalização (GPS) associados a cada imagem.
+
+  * **Processamento:**
+
+    1.  **Pré-processamento:** A imagem é normalizada e segmentada para isolar a área de interesse.
+    2.  **Inferência:** A imagem é processada por uma Rede Neural Convolucional (CNN) treinada para identificar padrões de doenças.
+    3.  **Classificação:** O modelo retorna a classe mais provável (ex: "Saudável", "Ferrugem") com um grau de confiança.
+    4.  **Agregação:** Dados de GPS, se disponíveis, são usados para gerar um mapa de calor da incidência.
+
+  * **Saídas:**
+
+      * Diagnóstico da imagem com o nome da doença.
+      * Grau de confiança da predição.
+      * Mapa visual da plantação destacando as áreas afetadas.
+
+## 🛠️ Tecnologias Utilizadas
+
+Este projeto foi construído utilizando as seguintes tecnologias:
+
+  * **Linguagem:** **Python**
+  * **Framework de Deep Learning:** **TensorFlow/Keras**
+  * **Processamento de Imagem:** **OpenCV**
+  * **Backend (API):** **FastAPI**
+  * **Frontend (Dashboard):** **Streamlit**
+
+## 🚀 Como Executar a POC
+
+Para executar esta Prova de Conceito em seu ambiente local, siga os passos abaixo.
+
+### Pré-requisitos
+
+  * Python 3.9+
+  * Git
+
+### Instalação
+
+1.  Clone o repositório:
+
+    ```sh
+    git clone https://github.com/seu-usuario/agrovisao-ai.git
+    cd agrovisao-ai
     ```
 
-*   **Definição de Entradas, Processamento e Saídas:**
+2.  Crie e ative um ambiente virtual:
 
-    *   **Entradas:**
-        *   Imagens digitais da plantação (folhas, caules) em alta resolução.
-        *   (Opcional) Metadados de geolocalização (GPS) associados a cada imagem.
-    *   **Processamento:**
-        *   **Pré-processamento das imagens:** Redimensionamento, normalização de cores e segmentação para isolar a parte relevante da planta (ex: a folha).
-        *   **Inferência:** A imagem pré-processada é enviada para o modelo de rede neural convolucional (CNN) treinado.
-        *   **Classificação:** O modelo calcula a probabilidade de a imagem pertencer a cada uma das classes (saudável ou tipos de doenças).
-        *   **Agregação de Dados:** Se dados de GPS estiverem disponíveis, o sistema agrega os resultados para gerar um mapa de calor da incidência de doenças na propriedade.
-    *   **Saídas:**
-        *   Diagnóstico da imagem: Nome da doença ou indicação de planta saudável.
-        *   Grau de confiança da predição (ex: 95% de certeza de ser "Ferrugem").
-        *   Mapa visual da plantação com as áreas afetadas destacadas.
-        *   Alertas e recomendações para o agricultor.
+    ```sh
+    # Windows
+    python -m venv venv
+    .\venv\Scripts\activate
 
-## Escolha dos Algoritmos
+    # Linux / macOS
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
 
-*   **Paradigma Aplicado:**
-    O paradigma que melhor se aplica é o de **Reconhecimento de Padrões**, utilizando **Machine Learning**, mais especificamente **Deep Learning**.
+3.  Instale as dependências:
 
-*   **Justificativa da Escolha:**
-    A escolha recai sobre uma **Rede Neural Convolucional (CNN)**. O motivo é que as CNNs são o estado da arte para tarefas de classificação de imagens. Elas são projetadas para aprender hierarquias de características visuais automaticamente. As primeiras camadas da rede aprendem a reconhecer padrões simples como bordas e cores, enquanto camadas mais profundas aprendem a combinar esses padrões para identificar texturas complexas, formas e, finalmente, objetos inteiros ou, neste caso, os sinais visuais de uma doença específica em uma folha. Essa capacidade de aprendizado automático de features elimina a necessidade de extração manual de características, tornando o modelo mais robusto e preciso.
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-## Pesquisa Tecnológica
+### Execução
 
-*   **Bibliotecas, Frameworks e Linguagens:**
-    *   **Linguagem de Programação:** **Python**, devido à sua simplicidade, vasta comunidade e ecossistema robusto de bibliotecas para ciência de dados e IA.
-    *   **Frameworks de Deep Learning:** **TensorFlow** com a API **Keras** ou **PyTorch**. Ambos são frameworks poderosos e flexíveis para construir e treinar redes neurais. A escolha por TensorFlow/Keras se justifica pela facilidade de prototipação e implementação para uma POC.
-    *   **Visão Computacional:** **OpenCV**, para realizar as tarefas de pré-processamento das imagens, como redimensionamento, cortes e filtros.
-    *   **Backend (API):** **Flask** ou **FastAPI**, para construir um serviço web leve que recebe as imagens, aciona o modelo de IA e retorna o resultado.
-    *   **Frontend (Dashboard):** Um framework simples como **Streamlit** para a POC, ou **React/Vue.js** para uma versão mais completa, permitindo ao usuário fazer o upload das imagens e visualizar o mapa e os diagnósticos.
+1.  Inicie a aplicação com Streamlit:
+    ```sh
+    streamlit run app.py
+    ```
+2.  Abra seu navegador e acesse `http://localhost:8501`.
+3.  Faça o upload de uma imagem de uma folha de planta para ver o diagnóstico.
 
-*   **Justificativa de cada Tecnologia:**
-    *   **Python:** É a linguagem padrão da indústria para Machine Learning.
-    *   **TensorFlow/Keras:** Oferece um alto nível de abstração que acelera o desenvolvimento do modelo, ideal para uma prova de conceito, além de ter ferramentas excelentes para implantação (como o TensorFlow Serving).
-    *   **OpenCV:** É a biblioteca mais completa e performática para manipulação de imagens em tempo real.
-    *   **Flask/FastAPI:** São microframeworks que permitem criar uma API funcional com poucas linhas de código, o que é perfeito para validar a solução rapidamente.
-    *   **Streamlit:** Permite criar interfaces web interativas para modelos de dados e IA usando apenas Python, eliminando a necessidade de conhecimento em desenvolvimento web tradicional para a fase de POC.
+## 🗺️ Próximos Passos
 
-## Plano de Desenvolvimento
+Este projeto é uma POC funcional. Os próximos passos para evoluir a solução incluem:
 
-### Passos para Implementar a POC:
-
-1.  **Fase 1: Coleta e Preparação de Dados (1 semana)**
-    *   Obter um dataset público de imagens de plantas (ex: PlantVillage) ou criar um pequeno dataset próprio com fotos de plantas saudáveis e doentes de uma cultura específica.
-    *   Organizar e rotular as imagens em pastas separadas por classe (ex: /saudavel, /ferrugem, etc.).
-    *   Escrever scripts para pré-processar as imagens (padronizar tamanho e normalizar).
-2.  **Fase 2: Desenvolvimento e Treinamento do Modelo (1 semana)**
-    *   Definir a arquitetura da CNN (ex: usando uma arquitetura conhecida como MobileNetV2 por ser leve e eficiente).
-    *   Treinar o modelo com o dataset preparado, dividindo-o em conjuntos de treino e validação.
-    *   Avaliar a acurácia do modelo e ajustá-lo se necessário. Salvar o modelo treinado.
-3.  **Fase 3: Desenvolvimento do Backend (3 dias)**
-    *   Criar uma API simples com um endpoint (ex: /predict) que recebe uma imagem.
-    *   Carregar o modelo treinado e implementar a lógica para pré-processar a imagem recebida e retornar a predição do modelo em formato JSON.
-4.  **Fase 4: Desenvolvimento do Frontend (2 dias)**
-    *   Construir uma interface de usuário simples com Streamlit que permita ao usuário fazer o upload de uma imagem.
-    *   A interface enviará a imagem para a API do backend, receberá o resultado e o exibirá de forma clara para o usuário.
-5.  **Fase 5: Integração e Testes (2 dias)**
-    *   Conectar o frontend ao backend e realizar testes completos do fluxo.
-    *   Realizar testes com imagens que não faziam parte do conjunto de treinamento para verificar a generalização do modelo.
-    *   Preparar a documentação e a apresentação da POC.
-
----
-
-# POC: Detecção de Doenças em Plantações com IA
-
-1.  **A briga com as pragas:**
-    *   Agricultura sofre pra caramba com doenças, causando prejuízos e gastando muita grana com veneno.
-    *   Monitorar tudo na mão é lento e dá muito erro.
-    *   IA é a solução, porque consegue ver padrões complexos em fotos (tipo, de folhas) melhor que a gente\!
-2.  **A ideia do "AgroVisão AI":**
-    *   Um sistema que usa fotos de drone ou celular pra descobrir doenças nas plantas rapidão.
-    *   Você tira a foto, manda pra nuvem, a IA analisa e te diz o que é em tempo real.
-    *   Mostra num mapa onde tá o problema, qual doença e o quão grave é, pra você agir no ponto certo.
-    *   A principal função é **classificar as imagens** (tipo: "saudável", "ferrugem", "oídio").
-3.  **Como a coisa funciona (em linhas gerais):**
-    *   **Entrada:** Fotos das plantas (e, opcionalmente, sua localização GPS).
-    *   **Processamento:** A imagem é ajustada, a IA (uma Rede Neural Convolucional, ou CNN) analisa e classifica. Se tiver GPS, monta um mapa de calor.
-    *   **Saída:** Te diz qual doença, o quão confiável é o diagnóstico, um mapa com as áreas afetadas e até umas dicas.
-4.  **A escolha da IA:**
-    *   Usamos **Deep Learning** pra **Reconhecimento de Padrões**.
-    *   Por que? **CNNs (Redes Neurais Convolucionais)** são as tops pra analisar imagens. Elas aprendem a identificar tudo, desde bordas até os sinais complexos das doenças nas folhas.
-5.  **As ferramentas que a gente vai usar:**
-    *   **Linguagem:** **Python** (é a queridinha da IA).
-    *   **IA:** **TensorFlow/Keras** (pra facilitar a vida na hora de criar o modelo) ou PyTorch.
-    *   **Imagens:** **OpenCV** (pra dar um trato nas fotos antes de mandar pra IA).
-    *   **"Cérebro" do sistema (API):** **Flask** ou **FastAPI** (pra receber as fotos e mandar o resultado).
-    *   **Tela pro usuário (Dashboard):** **Streamlit** (pra fazer algo rápido e funcional) ou React/Vue.js pra algo mais robusto.
-6.  **O passo a passo pra montar a POC:**
-    *   **Semana 1: Juntar e arrumar os dados.** Pegar fotos de plantas saudáveis e doentes, organizar tudo direitinho.
-    *   **Semana 2: Criar e treinar a IA.** Montar a CNN, ensinar ela com as fotos e ver se tá boa.
-    *   **3 dias: Fazer o "cérebro" (backend).** Criar a API que vai receber as fotos e chamar a IA.
-    *   **2 dias: Montar a telinha pro usuário (frontend).** Fazer a interface pra ele subir as fotos e ver o diagnóstico.
-    *   **2 dias: Ligar tudo e testar\!** Ver se o sistema funciona direitinho, testar com fotos novas e preparar a apresentação.
+  - [ ] Aumentar o dataset com mais imagens e classes de doenças.
+  - [ ] Otimizar o modelo de IA para maior acurácia e performance.
+  - [ ] Desenvolver um sistema de autenticação de usuários.
+  - [ ] Integrar com APIs de clima e dados de solo para enriquecer as predições.
+  - [ ] Criar um aplicativo mobile para facilitar a captura e envio de imagens.
